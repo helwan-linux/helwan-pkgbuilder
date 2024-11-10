@@ -1,0 +1,21 @@
+pkgname=hel-wallpapers
+_pkgname=hel-wallpapers
+_destname1="/usr/share/backgrounds/"
+pkgver=21.02
+pkgrel=2
+pkgdesc="Wallpapers for helwan linux"
+arch=('any')
+url="https://github.com/helwan-linux/hel-wallpapers"
+license=('GPL3')
+makedepends=('git')
+provides=("${pkgname}")
+options=(!strip !emptydirs)
+source=(${_pkgname}::"git+https://github.com/helwan-linux/${_pkgname}.git")
+sha256sums=('SKIP')
+package() {
+#	install -dm755 ${pkgdir}${_licensedir}${_pkgname}
+#	install -m644  ${srcdir}/${_pkgname}/LICENSE ${pkgdir}${_licensedir}${_pkgname}
+
+	install -dm755 ${pkgdir}${_destname1}
+	cp -r  ${srcdir}/${_pkgname}${_destname1}* ${pkgdir}${_destname1}
+}
