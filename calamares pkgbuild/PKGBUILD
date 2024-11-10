@@ -1,6 +1,6 @@
 #Calamares PKGBUILD for Helwan Linux GUI
 
-pkgname=calamares
+pkgname=hel-calamares
 pkgver=3.3.11
 pkgrel=2
 pkgdesc='Distribution-independent installer framework'
