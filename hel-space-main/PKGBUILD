@@ -1,0 +1,51 @@
+# Maintainer: Saeed Badrelden <saeedbadrelden2021@gmail.com>
+pkgname=hel-space-game
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="An exciting space shooter game by Helwan Linux Community."
+arch=('x86_64')
+url="https://github.com/helwan-linux/hel-space"
+license=('MIT')
+depends=(
+  'python'
+  'python-kivy'
+  'sdl2'
+  'sdl2_mixer'
+  'sdl2_image'
+  'sdl2_ttf'
+  'sdl2_gfx'
+  'mesa'
+)
+makedepends=('git' 'pyinstaller')
+
+source=("git+${url}.git")
+sha256sums=('SKIP')
+
+prepare() {
+  cd "${srcdir}/hel-space/helwan-game"
+  rm -rf dist build *.spec
+}
+
+build() {
+  cd "${srcdir}/hel-space/helwan-game"
+
+  pyinstaller --noconfirm --clean --log-level=INFO --onefile --windowed \
+    --name "${pkgname}" \
+    --add-data "assets:assets" \
+    --hidden-import=game_core \
+    --hidden-import=entities \
+    --hidden-import=screens \
+    main.py
+}
+
+package() {
+  cd "${srcdir}/hel-space/helwan-game"
+
+  install -D -m755 "dist/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+  install -D -m644 "HelwanSpaceGame.desktop" "${pkgdir}/usr/share/applications/HelwanSpaceGame.desktop"
+  install -D -m644 "assets/icon.png" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/${pkgname}.png"
+}
+
+# لا ملفات debug هنا
+options=(!strip !debug)
+
